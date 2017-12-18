@@ -5,7 +5,7 @@ using System.Web;
 
 namespace S2WebshopOpdracht.Models
 {
-    public class Administrator 
+    public class Administrator : Account
     {
         private int id;
         private string adminname;
@@ -13,15 +13,21 @@ namespace S2WebshopOpdracht.Models
         public int Id { get { return id; } set { id = value; } }
         public string AdminName { get { return adminname; } set { adminname = value; } }
 
-        public Administrator(int id, string adminname)
+        public Administrator(string adminname, string username, string password, string email) : base(username, password, email)
         {
-            this.id = id;
             this.adminname = adminname;
         }
 
-        public Administrator(string adminname):this(-1, adminname)
+        public Administrator(int id, string adminname) : base(id)
+        {
+            this.adminname = adminname;
+        }
+
+        public Administrator(string adminname) : this(-1, adminname)
         {
 
         }
+
+       
     }
 }

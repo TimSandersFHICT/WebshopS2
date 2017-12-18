@@ -7,7 +7,7 @@ using System.Web;
 
 namespace S2WebshopOpdracht.App_DAL
 {
-    public class AccountSQLContext:IAccountContext
+    public class AccountSQLContext : IAccountContext
     {
         Address address;
         Account account;
@@ -35,19 +35,187 @@ namespace S2WebshopOpdracht.App_DAL
             return accounts;
         }
 
+        //Insert a administrator object
+        public Administrator InsertAdministrator(Administrator administrator)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string queryadmin = "INSERT INTO Administrator (AdminName)" +
+                    "VALUES (@adminname)";
+                string queryaccount = "INSERT INTO Account (Username, Password, Email, AdministratorID)" +
+                   "VALUES (@username, @password, @email, @administratorid)";
+                using (SqlCommand command = new SqlCommand(queryadmin, connection))
+                {
+                    command.Parameters.AddWithValue("@adminname", administrator.AdminName);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+                using (SqlCommand command = new SqlCommand(queryaccount, connection))
+                {
+                    command.Parameters.AddWithValue("@username", administrator.Username);
+                    command.Parameters.AddWithValue("@password", administrator.Password);
+                    command.Parameters.AddWithValue("@email", administrator.Email);
+                    command.Parameters.AddWithValue("@administratorid", administrator.Id);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+                return administrator;
+            }
+        }
+
+        //Insert a customer object
+        public Customer InsertCustomer(Customer customer)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string queryadmin = "INSERT INTO Customer (CreditCardInfo, PhoneNumber, FirstName, LastName, ShippingInfo)" +
+                    "VALUES (@creditcardinfo, @phonenumber, @firstname, @lastname, @shippinginfo)";
+
+                string queryaccount = "INSERT INTO Account (Username, Password, Email, CustomerID)" +
+                   "VALUES (@username, @password, @email, @customerid)";
+                using (SqlCommand command = new SqlCommand(queryadmin, connection))
+                {
+                    command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
+                    command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
+                    command.Parameters.AddWithValue("@firstname", customer.FirstName);
+                    command.Parameters.AddWithValue("@lastname", customer.LastName);
+                    command.Parameters.AddWithValue("@shippinginfo", customer.ShippingInfo);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+                using (SqlCommand command = new SqlCommand(queryaccount, connection))
+                {
+                    command.Parameters.AddWithValue("@username", customer.Username);
+                    command.Parameters.AddWithValue("@password", customer.Password);
+                    command.Parameters.AddWithValue("@email", customer.Email);
+                    command.Parameters.AddWithValue("@customerid", customer.Id);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+                return customer;
+            }
+        }
+
+        //Delete a account object
+        public bool DeleteAccount(int id)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "DELETE FROM Account WHERE ID=@id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Update a customer object
+        public bool UpdateCustomer(Customer customer)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string querycustomer = "UPDATE Customer" +
+                    " SET CreditCardInfo=@creditcardinfo, PhoneNumber=@phonenumber, FirstName=@firstname, LastName=@lastname, ShippingInfo=@shippinginfo" +
+                    " WHERE ID=@id";
+                string queryaccount = "UPDATE Account" +
+                    " SET Username=@username, Password=@password, Email=@email" +
+                    " WHERE ID=@id";
+                using (SqlCommand command = new SqlCommand(querycustomer, connection))
+                {
+                    command.Parameters.AddWithValue("@id", customer.Id);
+                    command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
+                    command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
+                    command.Parameters.AddWithValue("@firstname", customer.FirstName);
+                    command.Parameters.AddWithValue("@lastname", customer.LastName);
+                    command.Parameters.AddWithValue("@shippinginfo", customer.ShippingInfo);
+                    try
+                    {
+                        if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
+                        {
+                            return true;
+                        }
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+
+                }
+                using (SqlCommand command = new SqlCommand(queryaccount, connection))
+                {
+                    command.Parameters.AddWithValue("@id", customer.Id);
+                    command.Parameters.AddWithValue("@username", customer.Username);
+                    command.Parameters.AddWithValue("@password", customer.Password);
+                    command.Parameters.AddWithValue("@email", customer.Email);
+                    try
+                    {
+                        if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
+                        {
+                            return true;
+                        }
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+
+                }
+            }
+            return false;
+        }
+
         private Account CreateAccountFromReader(SqlDataReader reader)
         {
-            if(reader["CustomerID"] == DBNull.Value)
+            if (reader["CustomerID"] == DBNull.Value)
             {
                 return new Administrator(
-                    );
+                 Convert.ToString(reader["AdminName"]),
+                 Convert.ToString(reader["Username"]),
+                 Convert.ToString(reader["Password"]),
+                 Convert.ToString(reader["Email"]));
 
-               
+
             }
-            else if (reader["AdministratorID"] == DBNull.Value)
+            else
             {
                 return new Customer(
-                    );
+                 Convert.ToString(reader["CreditCardInfo"]),
+                 Convert.ToString(reader["PhoneNumber"]),
+                 Convert.ToString(reader["FirstName"]),
+                 Convert.ToString(reader["LastName"]),
+                 Convert.ToString(reader["ShippingInfo"]),
+                 Convert.ToString(reader["Username"]),
+                 Convert.ToString(reader["Password"]),
+                 Convert.ToString(reader["Email"]));
             }
         }
 

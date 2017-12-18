@@ -5,7 +5,7 @@ using System.Web;
 
 namespace S2WebshopOpdracht.Models
 {
-    public class Customer
+    public class Customer : Account
     {
         private int id;
         private string creditcardinfo;
@@ -21,9 +21,17 @@ namespace S2WebshopOpdracht.Models
         public string LastName { get { return lastname; } set { lastname = value; } }
         public string ShippingInfo { get { return shippinginfo; } set { shippinginfo = value; } }
 
-        public Customer(int id, string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo)
+        public Customer(string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo, string username, string password, string email) : base(username, password, email)
         {
-            this.id = id;
+            this.creditcardinfo = creditcardinfo;
+            this.phonenumber = phonenumber;
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.shippinginfo = shippinginfo;
+        }
+
+        public Customer(int id, string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo) : base(id)
+        {
             this.creditcardinfo = creditcardinfo;
             this.phonenumber = phonenumber;
             this.firstname = firstname;
@@ -36,5 +44,6 @@ namespace S2WebshopOpdracht.Models
 
         }
 
+        
     }
 }
