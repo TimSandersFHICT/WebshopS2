@@ -145,6 +145,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_DAL\AccountSQLContext.cs" />
+    <Compile Include="App_DAL\Database.cs" />
+    <Compile Include="App_DAL\IAccountContext.cs" />
+    <Compile Include="App_DAL\IOrderContext.cs" />
+    <Compile Include="App_DAL\IProductContext.cs" />
+    <Compile Include="App_DAL\OrderSQLContext.cs" />
+    <Compile Include="App_DAL\ProductSQLContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
