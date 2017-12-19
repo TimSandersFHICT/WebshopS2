@@ -4,12 +4,25 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+ <!-- Add Google Maps -->
+<div id="googleMap" style="height:400px;" class="w3-grayscale-max"></div>
+<script>
+            function myMap() {
+                myCenter = new google.maps.LatLng(51.451657, 5.478542);
+                var mapOptions = {
+                    center: myCenter,
+                    zoom: 17, scrollwheel: false, draggable: false,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+                var marker = new google.maps.Marker({
+                    position: myCenter,
+                });
+                marker.setMap(map);
+            }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaa2c-ltKByGUCHuAtdxSyVc5jBjw6VLI&callback=myMap"></script>
 
 <address>
     <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
