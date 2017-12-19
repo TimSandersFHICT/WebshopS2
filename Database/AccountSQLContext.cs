@@ -1,11 +1,11 @@
-﻿using S2WebshopOpdracht.Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace S2WebshopOpdracht.App_DAL
+namespace Database
 {
     public class AccountSQLContext : IAccountContext
     {

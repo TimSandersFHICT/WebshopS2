@@ -145,35 +145,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_DAL\AccountSQLContext.cs" />
-    <Compile Include="App_DAL\Database.cs" />
-    <Compile Include="App_DAL\IAccountContext.cs" />
-    <Compile Include="App_DAL\IOrderContext.cs" />
-    <Compile Include="App_DAL\IProductContext.cs" />
-    <Compile Include="App_DAL\OrderSQLContext.cs" />
-    <Compile Include="App_DAL\ProductSQLContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AccountRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
-    <Compile Include="Controllers\OrderRepository.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ProductRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Administrator.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Manufacturer.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderedProduct.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Review.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +209,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{9c46b794-f953-4041-91ee-f6fa53e1f21d}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

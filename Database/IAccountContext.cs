@@ -1,11 +1,11 @@
-﻿using S2WebshopOpdracht.Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S2WebshopOpdracht.App_DAL
+namespace Database
 {
     public interface IAccountContext
     {

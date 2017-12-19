@@ -1,24 +1,24 @@
-﻿using S2WebshopOpdracht.Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace S2WebshopOpdracht.App_DAL
+namespace Database
 {
-    public class ProductSQLContext:IProductContext
+    public class OrderSQLContext:IOrderContext
     {
-        Product product;
-        Review review;
+        Order order;
+        OrderedProduct orderedproduct;
 
-        //Get all products
-        public List<Product> GetAllProducts()
+        //Get all orders
+        public List<Order> GetAllOrders()
         {
-            List<Product> products = new List<Product>();
+            List<Order> orders = new List<Order>();
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "SELECT * FROM Product ORDER BY ID";
+                string query = "SELECT * FROM Orders ORDER BY ID";
 
                 //commit
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -27,28 +27,27 @@ namespace S2WebshopOpdracht.App_DAL
                     {
                         while (reader.Read())
                         {
-                            products.Add(CreateProductFromReader(reader));
+                            orders.Add(CreateOrderFromReader(reader));
                         }
                     }
                 }
             }
-            return products;
+            return orders;
         }
 
-        //Insert a product object
-        public Product InsertProduct(Product product)
+        //Insert a order object
+        public Order InsertOrder(Order order)
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "INSERT INTO Product (ManufacturerID, Name, Description, Price, Stock)" +
-                    "VALUES (@manufacturerid, @name, @description, @price, @stock)";
+                string query = "INSERT INTO Orders (AccountID, DeliveryName, BillingName, OrderStatus)" +
+                    "VALUES (@accountid, @deliveryname, @billingname, @orderstatus)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@manufacturerid", product.ManufacturerId);
-                    command.Parameters.AddWithValue("@name", product.Name);
-                    command.Parameters.AddWithValue("@description", product.Description);
-                    command.Parameters.AddWithValue("@price", product.Price);
-                    command.Parameters.AddWithValue("@stock", product.Stock);
+                    command.Parameters.AddWithValue("@accountid", order.AccountId);
+                    command.Parameters.AddWithValue("@deliveryname", order.DeliveryName);
+                    command.Parameters.AddWithValue("@billingname", order.BillingName);
+                    command.Parameters.AddWithValue("@orderstatus", order.OrderStatus);
                     try
                     {
                         command.ExecuteNonQuery();
@@ -58,16 +57,16 @@ namespace S2WebshopOpdracht.App_DAL
 
                     }
                 }
-                return product;
+                return order;
             }
         }
 
-        //Delete a product object
-        public bool DeleteProduct(int id)
+        //Delete a order object
+        public bool DeleteOrder(int id)
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "DELETE FROM Product WHERE ID=@id";
+                string query = "DELETE FROM Orders WHERE ID=@id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("id", id);
@@ -80,22 +79,21 @@ namespace S2WebshopOpdracht.App_DAL
             return false;
         }
 
-        //Update a product object
-        public bool UpdateProduct(Product product)
+        //Update a order object
+        public bool UpdateOrder(Order order)
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "UPDATE Product" +
-                    " SET ManufacturerID=@manufacturerid, Name=@name, Description=@description, Price=@price, Stock=@stock" +
+                string query = "UPDATE Orders" +
+                    " SET AccountID=@accountid, DeliveryName=@deliveryname, BillingName=@billingname, OrderStatus=@orderstatus" +
                     " WHERE ID=@id";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", product.Id);
-                    command.Parameters.AddWithValue("@manufacturerid", product.ManufacturerId);
-                    command.Parameters.AddWithValue("@name", product.Name);
-                    command.Parameters.AddWithValue("@description", product.Description);
-                    command.Parameters.AddWithValue("@price", product.Price);
-                    command.Parameters.AddWithValue("@stock", product.Stock);
+                    command.Parameters.AddWithValue("@id", order.Id);
+                    command.Parameters.AddWithValue("@accountid", order.AccountId);
+                    command.Parameters.AddWithValue("@deliveryname", order.DeliveryName);
+                    command.Parameters.AddWithValue("@billingname", order.BillingName);
+                    command.Parameters.AddWithValue("@orderstatus", order.OrderStatus);
                     try
                     {
                         if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
@@ -112,12 +110,12 @@ namespace S2WebshopOpdracht.App_DAL
             return false;
         }
 
-        //Get a product object by id
-        public Product GetProductById(int id)
+        //Get a order object by id
+        public Order GetOrderById(int id)
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "SELECT * FROM Product WHERE ID=@id";
+                string query = "SELECT * FROM Orders WHERE ID=@id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -126,154 +124,149 @@ namespace S2WebshopOpdracht.App_DAL
                     {
                         while (reader.Read())
                         {
-                            product = CreateProductFromReader(reader);
+                            order = CreateOrderFromReader(reader);
                         }
                     }
                 }
             }
-            return product;
+            return order;
         }
 
-        private Product CreateProductFromReader(SqlDataReader reader)
+        private Order CreateOrderFromReader(SqlDataReader reader)
         {
-            return new Product(
-                 Convert.ToInt32(reader["ID"]),
-                 Convert.ToInt32(reader["ManufacturerID"]),
-                 Convert.ToString(reader["Name"]),
-                 Convert.ToString(reader["Description"]),
-                 Convert.ToDecimal(reader["Price"]),
-                 Convert.ToInt32(reader["Stock"]));
-        }
-
-
-        //Get all reviews
-        public List<Review> GetAllReviews()
-        {
-            List<Review> reviews = new List<Review>();
-            using (SqlConnection connection = Database.Connection)
-            {
-                string query = "SELECT * FROM Review ORDER BY ID";
-
-                //commit
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            reviews.Add(CreateReviewFromReader(reader));
-                        }
-                    }
-                }
-            }
-            return reviews;
-        }
-
-        //Insert a review object
-        public Review InsertReview(Review review)
-        {
-            using (SqlConnection connection = Database.Connection)
-            {
-                string query = "INSERT INTO Review (AccountID, ProductID, Rating, ReviewText)" +
-                    "VALUES (@accountid, @productid, @rating, @reviewtext)";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@accountid", review.AccountId);
-                    command.Parameters.AddWithValue("@productid", review.ProductId);
-                    command.Parameters.AddWithValue("@rating", review.Rating);
-                    command.Parameters.AddWithValue("@reviewtext", review.ReviewText);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (SqlException e)
-                    {
-
-                    }
-                }
-                return review;
-            }
-        }
-
-        //Delete a review object
-        public bool DeleteReview(int id)
-        {
-            using (SqlConnection connection = Database.Connection)
-            {
-                string query = "DELETE FROM Review WHERE ID=@id";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("id", id);
-                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        //Update a review object
-        public bool UpdateReview(Review review)
-        {
-            using (SqlConnection connection = Database.Connection)
-            {
-                string query = "UPDATE Review" +
-                    " SET AccountID=@accountid, ProductID=@productid, Rating=@rating, ReviewText=@reviewtext" +
-                    " WHERE ID=@id";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", review.Id);
-                    command.Parameters.AddWithValue("@accountid", review.AccountId);
-                    command.Parameters.AddWithValue("@productid", review.ProductId);
-                    command.Parameters.AddWithValue("@rating", review.Rating);
-                    command.Parameters.AddWithValue("@reviewtext", review.ReviewText);
-                    try
-                    {
-                        if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
-                        {
-                            return true;
-                        }
-                    }
-                    catch (SqlException e)
-                    {
-
-                    }
-                }
-            }
-            return false;
-        }
-
-        //Get a review object by id
-        public Review GetReviewById(int id)
-        {
-            using (SqlConnection connection = Database.Connection)
-            {
-                string query = "SELECT * FROM Review WHERE ID=@id";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", id);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            product = CreateProductFromReader(reader);
-                        }
-                    }
-                }
-            }
-            return review;
-        }
-
-        private Review CreateReviewFromReader(SqlDataReader reader)
-        {
-            return new Review(
+            return new Order(
                  Convert.ToInt32(reader["ID"]),
                  Convert.ToInt32(reader["AccountID"]),
+                 Convert.ToString(reader["DeliveryName"]),
+                 Convert.ToString(reader["BillingName"]),
+                 Convert.ToBoolean(reader["OrderStatus"]));
+        }
+
+        //Get all orderedproducts
+        public List<OrderedProduct> GetAllOrderedProducts()
+        {
+            List<OrderedProduct> orderedproducts = new List<OrderedProduct>();
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "SELECT * FROM OrderedProduct ORDER BY ID";
+
+                //commit
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            orderedproducts.Add(CreateOrderedProductFromReader(reader));
+                        }
+                    }
+                }
+            }
+            return orderedproducts;
+        }
+
+        //Insert a orderedproduct object
+        public OrderedProduct InsertOrderedProduct(OrderedProduct orderedproduct)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "INSERT INTO OrderedProduct (OrderID, ProductID, Quantity)" +
+                    "VALUES (@orderid, @productid, @quantity)";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@orderid", orderedproduct.OrderId);
+                    command.Parameters.AddWithValue("@productid", orderedproduct.ProductId);
+                    command.Parameters.AddWithValue("@quantity", orderedproduct.Quantity);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+                return orderedproduct;
+            }
+        }
+
+        //Delete a orderedproduct object
+        public bool DeleteOrderedProduct(int id)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "DELETE FROM OrderedProduct WHERE ID=@id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Update a orderedproduct object
+        public bool UpdateOrderedProduct(OrderedProduct orderedproduct)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "UPDATE OrderedProduct" +
+                    " SET OrderID=@orderid, ProductID=@productid, Quantity=@quantity" +
+                    " WHERE ID=@id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", order.Id);
+                    command.Parameters.AddWithValue("@orderid", order.AccountId);
+                    command.Parameters.AddWithValue("@productid", order.DeliveryName);
+                    command.Parameters.AddWithValue("@quantity", order.BillingName);
+                    try
+                    {
+                        if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
+                        {
+                            return true;
+                        }
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+            }
+            return false;
+        }
+
+        //Get a orderedproduct object by id
+        public OrderedProduct GetOrderedProductById(int id)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "SELECT * FROM OrderedProduct WHERE ID=@id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            order = CreateOrderFromReader(reader);
+                        }
+                    }
+                }
+            }
+            return orderedproduct;
+        }
+
+        private OrderedProduct CreateOrderedProductFromReader(SqlDataReader reader)
+        {
+            return new OrderedProduct(
+                 Convert.ToInt32(reader["ID"]),
+                 Convert.ToInt32(reader["OrderID"]),
                  Convert.ToInt32(reader["ProductID"]),
-                 Convert.ToString(reader["Rating"]),
-                 Convert.ToString(reader["ReviewText"]));
+                 Convert.ToInt32(reader["Quantity"]));
         }
     }
 }

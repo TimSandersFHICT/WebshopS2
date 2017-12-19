@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace S2WebshopOpdracht.App_DAL
+namespace Database
 {
     public class Database
     {

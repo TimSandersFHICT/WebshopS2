@@ -1,11 +1,10 @@
-﻿using S2WebshopOpdracht.App_DAL;
-using S2WebshopOpdracht.Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace S2WebshopOpdracht.Controllers
+namespace Database
 {
     public class ProductRepository
     {

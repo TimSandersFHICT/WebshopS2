@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace S2WebshopOpdracht.Models
+namespace Models
 {
     public abstract class Account
     {
@@ -34,10 +34,15 @@ namespace S2WebshopOpdracht.Models
         }
 
         public Account(int id, int addressid, Administrator administrator, string username, string password, string email)
+            :this(id, addressid, username, password, email)
+        {
+            this.administrator = administrator;
+        }
+
+        private Account(int id, int addressid, string username, string password, string email)
         {
             this.id = id;
             this.addressid = addressid;
-            this.administrator = administrator;
             this.username = username;
             this.password = password;
             this.email = email;

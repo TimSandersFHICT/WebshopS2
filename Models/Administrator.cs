@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace S2WebshopOpdracht.Models
+namespace Models
 {
     public class Administrator : Account
     {
