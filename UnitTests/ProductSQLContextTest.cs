@@ -1,0 +1,100 @@
+﻿using System;
+using Database;
+using Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+
+namespace UnitTests
+{
+    [TestClass]
+    public class ProductSQLContextTest
+    {
+
+        ProductRepository repository = new ProductRepository(new ProductSQLContextTests());
+
+        [TestMethod()]
+        public void ProductTest()
+        {
+            Product product = new Product(1, 1, "Overwatch", "Nerf Junkrat", Convert.ToDecimal(49.55), 10);
+            Assert.AreEqual(1, product.Id, "Id is not equal");
+            Assert.AreEqual(1, product.ManufacturerId, "ManufacturerId is not equal");
+            Assert.AreEqual("Overwatch", product.Name, "Name is not equal");
+            Assert.AreEqual("Nerf Junkrat", product.Description, "Description is not equal");
+            Assert.AreEqual(Convert.ToDecimal(49.55), product.Price, "Price is not equal");
+            Assert.AreEqual(10, product.Stock, "Stock is not equal");
+
+        }
+
+
+        [TestMethod()]
+        public void GetAllProductsTest()
+        {
+            List<Product> productlist = repository.GetAllProducts();
+            Product[] productenlijst = productlist.ToArray();
+            Assert.AreEqual("Overwatch", productenlijst[0].Name);
+        }
+
+        private class ProductSQLContextTests : IProductContext
+        {
+            private List<Product> producten;
+
+            public ProductSQLContextTests()
+            {
+                producten = new List<Product>()
+                {
+                    new Product(1, 1, "Overwatch", "Nerf Junkrat", Convert.ToDecimal(49.55), 10)
+                };
+            }
+
+            public bool DeleteProduct(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool DeleteReview(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public List<Product> GetAllProducts()
+            {
+                return producten;
+            }
+
+            public List<Review> GetAllReviews()
+            {
+                throw new NotImplementedException();
+            }
+
+            public Product GetProductById(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Review GetReviewById(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Product InsertProduct(Product product)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Review InsertReview(Review review)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool UpdateProduct(Product product)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool UpdateReview(Review review)
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
+}
