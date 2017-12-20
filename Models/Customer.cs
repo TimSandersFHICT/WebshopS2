@@ -7,14 +7,14 @@ namespace Models
 {
     public class Customer : Account
     {
-        private int id;
+
         private string creditcardinfo;
         private string phonenumber;
         private string firstname;
         private string lastname;
         private string shippinginfo;
 
-        public int Id { get { return id; } set { id = value; } }
+
         public string CreditCardInfo { get { return creditcardinfo; } set { creditcardinfo = value; } }
         public string PhoneNumber { get { return phonenumber; } set { phonenumber = value; } }
         public string FirstName { get { return firstname; } set { firstname = value; } }

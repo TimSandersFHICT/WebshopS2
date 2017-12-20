@@ -24,13 +24,9 @@ namespace Models
         public string Email { get { return email; } set { email = value; } }
 
         public Account(int id, int addressid, Customer customer, string username, string password, string email)
+           : this(id, addressid, username, password, email)
         {
-            this.id = id;
-            this.addressid = addressid;
             this.customer = customer;
-            this.username = username;
-            this.password = password;
-            this.email = email;
         }
 
         public Account(int id, int addressid, Administrator administrator, string username, string password, string email)

@@ -7,10 +7,10 @@ namespace Models
 {
     public class Administrator : Account
     {
-        private int id;
+
         private string adminname;
 
-        public int Id { get { return id; } set { id = value; } }
+
         public string AdminName { get { return adminname; } set { adminname = value; } }
 
         public Administrator(string adminname, string username, string password, string email) : base(username, password, email)
