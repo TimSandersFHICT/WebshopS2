@@ -40,12 +40,13 @@ namespace Database
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string queryadmin = "INSERT INTO Administrator (AdminName)" +
+                string queryadmin = "INSERT INTO Administrator (AccountID, AdminName)" +
                     "VALUES (@adminname)";
-                string queryaccount = "INSERT INTO Account (Username, Password, Email, AdministratorID)" +
-                   "VALUES (@username, @password, @email, @administratorid)";
+                string queryaccount = "INSERT INTO Account (AddressID, Username, Password, Email)" +
+                   "VALUES (@addressid, @username, @password, @email)";
                 using (SqlCommand command = new SqlCommand(queryadmin, connection))
                 {
+                    command.Parameters.AddWithValue("@accountid", administrator.Id);
                     command.Parameters.AddWithValue("@adminname", administrator.AdminName);
                     try
                     {
@@ -58,10 +59,10 @@ namespace Database
                 }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
+                    command.Parameters.AddWithValue("@addressid", administrator.AddressId);
                     command.Parameters.AddWithValue("@username", administrator.Username);
                     command.Parameters.AddWithValue("@password", administrator.Password);
                     command.Parameters.AddWithValue("@email", administrator.Email);
-                    command.Parameters.AddWithValue("@administratorid", administrator.Id);
                     try
                     {
                         command.ExecuteNonQuery();
@@ -80,13 +81,14 @@ namespace Database
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string queryadmin = "INSERT INTO Customer (CreditCardInfo, PhoneNumber, FirstName, LastName, ShippingInfo)" +
-                    "VALUES (@creditcardinfo, @phonenumber, @firstname, @lastname, @shippinginfo)";
+                string querycustomer = "INSERT INTO Customer (AccountID, CreditCardInfo, PhoneNumber, FirstName, LastName, ShippingInfo)" +
+                    "VALUES (@accountid, @creditcardinfo, @phonenumber, @firstname, @lastname, @shippinginfo)";
 
-                string queryaccount = "INSERT INTO Account (Username, Password, Email, CustomerID)" +
-                   "VALUES (@username, @password, @email, @customerid)";
-                using (SqlCommand command = new SqlCommand(queryadmin, connection))
+                string queryaccount = "INSERT INTO Account (AddressID, Username, Password, Email)" +
+                   "VALUES (@addressid, @username, @password, @email)";
+                using (SqlCommand command = new SqlCommand(querycustomer, connection))
                 {
+                    command.Parameters.AddWithValue("@accountid", customer.Id);
                     command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
                     command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
                     command.Parameters.AddWithValue("@firstname", customer.FirstName);
@@ -103,10 +105,10 @@ namespace Database
                 }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
+                    command.Parameters.AddWithValue("@addressid", customer.AddressId);
                     command.Parameters.AddWithValue("@username", customer.Username);
                     command.Parameters.AddWithValue("@password", customer.Password);
                     command.Parameters.AddWithValue("@email", customer.Email);
-                    command.Parameters.AddWithValue("@customerid", customer.Id);
                     try
                     {
                         command.ExecuteNonQuery();
@@ -145,13 +147,13 @@ namespace Database
             {
                 string querycustomer = "UPDATE Customer" +
                     " SET CreditCardInfo=@creditcardinfo, PhoneNumber=@phonenumber, FirstName=@firstname, LastName=@lastname, ShippingInfo=@shippinginfo" +
-                    " WHERE ID=@id";
+                    " WHERE AccountID=@accountid";
                 string queryaccount = "UPDATE Account" +
                     " SET Username=@username, Password=@password, Email=@email" +
                     " WHERE ID=@id";
                 using (SqlCommand command = new SqlCommand(querycustomer, connection))
                 {
-                    command.Parameters.AddWithValue("@id", customer.Id);
+                    command.Parameters.AddWithValue("@accountid", customer.Id);
                     command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
                     command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
                     command.Parameters.AddWithValue("@firstname", customer.FirstName);
