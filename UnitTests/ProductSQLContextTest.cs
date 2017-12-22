@@ -1,5 +1,4 @@
 ﻿using System;
-using Database;
 using Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace UnitTests
     public class ProductSQLContextTest
     {
 
-        ProductRepository repository = new ProductRepository(new ProductSQLContextTests());
+        ProductLogic productlogic = new ProductLogic();
 
         [TestMethod()]
         public void ProductTest()
@@ -29,16 +28,16 @@ namespace UnitTests
         [TestMethod()]
         public void GetAllProductsTest()
         {
-            List<Product> productlist = repository.GetAllProducts();
+            List<Product> productlist = productlogic.GetAllProducts();
             Product[] productenlijst = productlist.ToArray();
             Assert.AreEqual("Overwatch", productenlijst[0].Name);
         }
 
-        private class ProductSQLContextTests : IProductContext
+        private class ProductLogic
         {
             private List<Product> producten;
 
-            public ProductSQLContextTests()
+            public ProductLogic()
             {
                 producten = new List<Product>()
                 {
