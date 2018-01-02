@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Models;
+using Logic;
 using System.Web.Mvc;
 
 namespace S2WebshopOpdracht.Controllers
 {
     public class ProductController : Controller
     {
+        private ProductLogic productLogic = new ProductLogic();
         // GET: Product
         public ActionResult Index()
         {
-            return View();
+            List<Product> products = productLogic.GetAllProducts();
+            return View(products);
         }
 
         // GET: Product/Details/5

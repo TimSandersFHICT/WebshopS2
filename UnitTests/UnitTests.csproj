@@ -54,14 +54,6 @@
     <Compile Include="ProductSQLContextTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{4dfe0a40-fab6-45fe-85dc-d590c231a2aa}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logic\Logic.csproj">
-      <Project>{05057521-ee69-47d4-896d-7cfb9f927940}</Project>
-      <Name>Logic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{9c46b794-f953-4041-91ee-f6fa53e1f21d}</Project>
       <Name>Models</Name>

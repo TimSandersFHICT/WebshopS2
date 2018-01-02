@@ -57,10 +57,6 @@
       <Project>{9C46B794-F953-4041-91EE-F6FA53E1F21D}</Project>
       <Name>Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\S2WebshopOpdracht\S2WebshopOpdracht.csproj">
-      <Project>{56D81F38-EB14-4909-A1EE-AD13E32EFCE7}</Project>
-      <Name>S2WebshopOpdracht</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

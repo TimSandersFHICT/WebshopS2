@@ -8,7 +8,7 @@ namespace Database
 {
     public class Database
     {
-        private static readonly string connectionString = "Data Source=TIMPC;Initial Catalog=SharingPlatformS2;Integrated Security=True";
+        private static readonly string connectionString = "Data Source=TIMPC;Initial Catalog=WebshopS2;Integrated Security=True";
 
 
         public static SqlConnection Connection
