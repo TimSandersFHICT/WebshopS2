@@ -54,7 +54,8 @@ namespace Logic
             }
             else
             {
-                return productrepo.UpdateProduct(product);
+                productrepo.UpdateProduct(product);
+                return true;
             }
         }
 

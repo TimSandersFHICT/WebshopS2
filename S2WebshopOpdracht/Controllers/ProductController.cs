@@ -21,7 +21,12 @@ namespace S2WebshopOpdracht.Controllers
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Product product = productLogic.GetProductById(id);
+            if (product != null)
+            {
+                return View(product);
+            }
+            else return HttpNotFound();
         }
 
         // GET: Product/Create
@@ -37,7 +42,8 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                Product product = new Product(Convert.ToInt32(collection["ManufacturerID"]), collection["Name"], collection["Description"], Convert.ToDecimal(collection["Price"]), Convert.ToInt32(collection["Stock"]));
+                productLogic.InsertProduct(product);
                 return RedirectToAction("Index");
             }
             catch
@@ -49,7 +55,12 @@ namespace S2WebshopOpdracht.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Product product = productLogic.GetProductById(id);
+            if (product != null)
+            {
+                return View(product);
+            }
+            else return HttpNotFound();
         }
 
         // POST: Product/Edit/5
@@ -59,7 +70,8 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                Product product = new Product(id, Convert.ToInt32(collection["ManufacturerID"]), collection["Name"], collection["Description"], Convert.ToDecimal(collection["Price"]), Convert.ToInt32(collection["Stock"]));
+                productLogic.UpdateProduct(product);
                 return RedirectToAction("Index");
             }
             catch
@@ -71,7 +83,12 @@ namespace S2WebshopOpdracht.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Product product = productLogic.GetProductById(id);
+            if (product != null)
+            {
+                return View(product);
+            }
+            else return HttpNotFound();
         }
 
         // POST: Product/Delete/5
@@ -81,7 +98,7 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                productLogic.DeleteProduct(id);
                 return RedirectToAction("Index");
             }
             catch
