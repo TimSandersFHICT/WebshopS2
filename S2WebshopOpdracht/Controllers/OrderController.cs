@@ -73,7 +73,7 @@ namespace S2WebshopOpdracht.Controllers
                 // TODO: Add update logic here
                 Order order = new Order(id, Convert.ToInt32(collection["AccountID"]), collection["DeliveryName"], collection["BillingName"], Convert.ToBoolean(collection["OrderStatus"]));
                 orderLogic.UpdateOrder(order);
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexOrder");
             }
             catch
             {
@@ -100,7 +100,7 @@ namespace S2WebshopOpdracht.Controllers
             {
                 // TODO: Add delete logic here
                 orderLogic.DeleteOrder(id);
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexOrder");
             }
             catch
             {

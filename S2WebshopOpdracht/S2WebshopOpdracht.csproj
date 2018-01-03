@@ -201,11 +201,15 @@
     <Content Include="Views\Product\DeleteProduct.cshtml" />
     <Content Include="Views\Product\EditProduct.cshtml" />
     <Content Include="Views\Product\IndexReview.cshtml" />
+    <Content Include="Views\Order\IndexOrder.cshtml" />
+    <Content Include="Views\Order\CreateOrder.cshtml" />
+    <Content Include="Views\Order\DetailsOrder.cshtml" />
+    <Content Include="Views\Order\EditOrder.cshtml" />
+    <Content Include="Views\Order\DeleteOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
-    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
