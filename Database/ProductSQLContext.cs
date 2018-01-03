@@ -258,7 +258,29 @@ namespace Database
                     {
                         while (reader.Read())
                         {
-                            product = CreateProductFromReader(reader);
+                            review = CreateReviewFromReader(reader);
+                        }
+                    }
+                }
+            }
+            return review;
+        }
+
+        //Get a review object by productid
+        public Review GetReviewByProductId(int productid)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "SELECT * FROM Review WHERE ProductID=@productid";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@productid", productid);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            review = CreateReviewFromReader(reader);
                         }
                     }
                 }

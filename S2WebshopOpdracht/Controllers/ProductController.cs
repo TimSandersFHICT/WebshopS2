@@ -5,16 +5,19 @@ using System.Web;
 using Models;
 using Logic;
 using System.Web.Mvc;
+using S2WebshopOpdracht.ViewModels;
 
 namespace S2WebshopOpdracht.Controllers
 {
     public class ProductController : Controller
     {
         private ProductLogic productLogic = new ProductLogic();
+        private ProductViewModel viewmodelProduct = new ProductViewModel();
 
         // GET: Product
         public ActionResult IndexProduct()
         {
+            
             List<Product> products = productLogic.GetAllProducts();
             return View(products);
         }
@@ -23,9 +26,17 @@ namespace S2WebshopOpdracht.Controllers
         public ActionResult DetailsProduct(int id)
         {
             Product product = productLogic.GetProductById(id);
-            if (product != null)
+            Review review = productLogic.GetReviewByProductId(id);
+
+            viewmodelProduct.Rating = review.Rating;
+            viewmodelProduct.ReviewText = review.ReviewText;
+            viewmodelProduct.Name = product.Name;
+            viewmodelProduct.Description = product.Description;
+            viewmodelProduct.Price = product.Price;
+            viewmodelProduct.Stock = product.Stock;
+            if (viewmodelProduct != null)
             {
-                return View(product);
+                return View(viewmodelProduct);
             }
             else return HttpNotFound();
         }

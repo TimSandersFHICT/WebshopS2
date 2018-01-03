@@ -64,5 +64,10 @@ namespace Database
         {
             return context.GetReviewById(id);
         }
+
+        public Review GetReviewByProductId(int productid)
+        {
+            return context.GetReviewById(productid);
+        }
     }
 }

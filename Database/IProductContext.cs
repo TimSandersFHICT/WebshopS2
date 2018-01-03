@@ -19,5 +19,6 @@ namespace Database
         bool DeleteReview(int id);
         bool UpdateReview(Review review);
         Review GetReviewById(int id);
+        Review GetReviewByProductId(int productid);
     }
 }

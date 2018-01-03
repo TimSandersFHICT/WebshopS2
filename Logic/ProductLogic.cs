@@ -136,5 +136,17 @@ namespace Logic
                 return productrepo.GetReviewById(id);
             }
         }
+
+        public Review GetReviewByProductId(int productid)
+        {
+            if(productid == 0)
+            {
+                throw new ArgumentException($"No product found.");
+            }
+            else
+            {
+                return productrepo.GetReviewByProductId(productid);
+            }
+        }
     }
 }

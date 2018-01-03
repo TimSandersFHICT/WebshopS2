@@ -1,23 +1,15 @@
-﻿@model Models.Product
+﻿@model S2WebshopOpdracht.ViewModels.ProductViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "DetailsProduct";
 }
 
-<h2>Details</h2>
+<h2>DetailsProduct</h2>
 
 <div>
-    <h4>Product</h4>
+    <h4>ProductViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ManufacturerId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ManufacturerId)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -50,9 +42,24 @@
             @Html.DisplayFor(model => model.Stock)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewText)
+        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditProduct", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "IndexProduct")
 </p>
