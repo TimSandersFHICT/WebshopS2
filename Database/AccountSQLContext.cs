@@ -1,6 +1,7 @@
 ﻿using Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -236,6 +237,37 @@ namespace Database
                 }
             }
             return false;
+        }
+
+        //Get username and passwords
+        public Account Login(string username, string password)
+        {
+            SqlConnection connection = Database.Connection;
+
+            //Check the state of the connection
+            ConnectionState conState = connection.State;
+
+            if (conState == ConnectionState.Open)
+            {
+                string query = "SELECT * FROM ACCOUNT WHERE Username=@username and Password=@password";
+                using (connection)
+                {
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.ExecuteScalar();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Account account = CreateAccountFromReader(reader);
+                            return account;
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         private Account CreateAccountFromReader(SqlDataReader reader)

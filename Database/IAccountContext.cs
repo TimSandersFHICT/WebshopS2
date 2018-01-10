@@ -16,6 +16,7 @@ namespace Database
         bool DeleteAdministrator(int id);
         Account GetAccountById(int id);
         bool UpdateAccount(Account account);
+        Account Login(string username, string password);
         List<Address> GetAllAddress();
         Address InsertAddress(Address address);
         bool DeleteAddress(int id);
