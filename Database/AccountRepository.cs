@@ -75,7 +75,7 @@ namespace Database
             return context.GetAddressById(id);
         }
 
-        Account Login(string username, string password)
+        public Account Login(string username, string password)
         {
             return context.Login(username, password);
         }

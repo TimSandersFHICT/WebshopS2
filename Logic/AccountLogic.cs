@@ -93,6 +93,19 @@ namespace Logic
             }
         }
 
+        //Logic for logging in 
+        public Account Login(string username, string password)
+        {
+            if (username == null || password == null)
+            {
+                throw new ArgumentException($"No log in information found.");
+            }
+            else
+            {
+                return accountrepo.Login(username, password);
+            }
+        }
+
         //Logic for getting all addresses
         public List<Address> GetAllAddress()
         {
@@ -151,5 +164,7 @@ namespace Logic
                 return accountrepo.GetAddressById(id);
             }
         }
+
+     
     }
 }
