@@ -21,7 +21,7 @@ namespace Models
         public string LastName { get { return lastname; } set { lastname = value; } }
         public string ShippingInfo { get { return shippinginfo; } set { shippinginfo = value; } }
 
-        public Customer(string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo, int addressid,  string username, string password, string email) : base(addressid, username, password, email)
+        public Customer(string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo,int id, int addressid,  string username, string password, string email) : base(id, addressid, username, password, email)
         {
             this.creditcardinfo = creditcardinfo;
             this.phonenumber = phonenumber;

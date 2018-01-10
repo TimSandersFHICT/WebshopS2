@@ -19,7 +19,7 @@ namespace Database
             List<Account> accounts = new List<Account>();
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "SELECT * FROM ACCOUNT ORDER BY ID";
+                string query = "SELECT * FROM ACCOUNT JOIN Customer ON Customer.AccountID = Account.ID ORDER BY ID";
 
                 //commit
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -190,7 +190,7 @@ namespace Database
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "SELECT * FROM Account WHERE ID=@id";
+                string query = "SELECT * FROM Account JOIN Customer ON Customer.AccountID = Account.ID WHERE ID=@id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -199,7 +199,7 @@ namespace Database
                     {
                         while (reader.Read())
                         {
-                            address = CreateAddressFromReader(reader);
+                            account = CreateAccountFromReader(reader);
                         }
                     }
                 }
@@ -249,7 +249,7 @@ namespace Database
 
             if (conState == ConnectionState.Open)
             {
-                string query = "SELECT * FROM ACCOUNT LEFT JOIN Customer ON Customer.AccountID = Account.ID WHERE Username=@username and Password=@password ";
+                string query = "SELECT * FROM ACCOUNT FULL OUTER JOIN Customer ON Customer.AccountID = Account.ID WHERE Username=@username and Password=@password ";
                 using (connection)
                 {
                     SqlCommand cmd = new SqlCommand(query, connection);
@@ -275,8 +275,9 @@ namespace Database
         {
             if (account is Administrator)
             {
-                return new Administrator(
+                return new Administrator(               
                  Convert.ToString(reader["AdminName"]),
+                 Convert.ToInt32(reader["ID"]),
                  Convert.ToInt32(reader["AddressID"]),
                  Convert.ToString(reader["Username"]),
                  Convert.ToString(reader["Password"]),
@@ -292,6 +293,7 @@ namespace Database
                  Convert.ToString(reader["FirstName"]),
                  Convert.ToString(reader["LastName"]),
                  Convert.ToString(reader["ShippingInfo"]),
+                 Convert.ToInt32(reader["ID"]),
                  Convert.ToInt32(reader["AddressID"]),
                  Convert.ToString(reader["Username"]),
                  Convert.ToString(reader["Password"]),

@@ -22,7 +22,7 @@ namespace Models
 
 
 
-        private Account(int id, int addressid, string username, string password, string email)
+        public Account(int id, int addressid, string username, string password, string email)
         {
             this.id = id;
             this.addressid = addressid;

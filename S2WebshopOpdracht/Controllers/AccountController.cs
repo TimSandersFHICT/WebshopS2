@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Logic;
+using Models;
+
 
 namespace S2WebshopOpdracht.Controllers
 {
     public class AccountController : Controller
     {
+        private AccountLogic accountlogic = new AccountLogic();
+
         // GET: Account
         public ActionResult Index()
         {
-            return View();
+            List<Account> accounts = accountlogic.GetAllAccounts();
+            return View(accounts);
         }
 
         // GET: Account/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Account account = accountlogic.GetAccountById(id);
+            if (account != null)
+            {
+                return View(account);
+            }
+            else return HttpNotFound();
         }
 
         // GET: Account/Create
