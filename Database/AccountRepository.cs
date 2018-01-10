@@ -30,14 +30,24 @@ namespace Database
             return context.InsertCustomer(customer);
         }
 
-        public bool DeleteAccount(int id)
+        public bool DeleteCustomer(int id)
         {
-            return context.DeleteAccount(id);
+            return context.DeleteCustomer(id);
         }
 
-        public bool UpdateCustomer(Customer customer)
+        public bool DeleteAdministrator(int id)
         {
-            return context.UpdateCustomer(customer);
+            return context.DeleteAdministrator(id);
+        }
+
+        public Account GetAccountById(int id)
+        {
+            return context.GetAccountById(id);
+        }
+
+        public bool UpdateAccount(Account account)
+        {
+            return context.UpdateAccount(account);
         }
 
         public List<Address> GetAllAddress()

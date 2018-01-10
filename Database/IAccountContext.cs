@@ -12,8 +12,10 @@ namespace Database
         List<Account> GetAllAccounts();
         Administrator InsertAdministrator(Administrator administrator);
         Customer InsertCustomer(Customer customer);
-        bool DeleteAccount(int id);
-        bool UpdateCustomer(Customer customer);
+        bool DeleteCustomer(int id);
+        bool DeleteAdministrator(int id);
+        Account GetAccountById(int id);
+        bool UpdateAccount(Account account);
         List<Address> GetAllAddress();
         Address InsertAddress(Address address);
         bool DeleteAddress(int id);

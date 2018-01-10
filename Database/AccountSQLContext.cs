@@ -44,19 +44,7 @@ namespace Database
                     "VALUES (@adminname)";
                 string queryaccount = "INSERT INTO Account (AddressID, Username, Password, Email)" +
                    "VALUES (@addressid, @username, @password, @email)";
-                using (SqlCommand command = new SqlCommand(queryadmin, connection))
-                {
-                    command.Parameters.AddWithValue("@accountid", administrator.Id);
-                    command.Parameters.AddWithValue("@adminname", administrator.AdminName);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (SqlException e)
-                    {
 
-                    }
-                }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
                     command.Parameters.AddWithValue("@addressid", administrator.AddressId);
@@ -72,6 +60,20 @@ namespace Database
 
                     }
                 }
+                using (SqlCommand command = new SqlCommand(queryadmin, connection))
+                {
+                    command.Parameters.AddWithValue("@accountid", administrator.Id);
+                    command.Parameters.AddWithValue("@adminname", administrator.AdminName);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+                
                 return administrator;
             }
         }
@@ -86,23 +88,7 @@ namespace Database
 
                 string queryaccount = "INSERT INTO Account (AddressID, Username, Password, Email)" +
                    "VALUES (@addressid, @username, @password, @email)";
-                using (SqlCommand command = new SqlCommand(querycustomer, connection))
-                {
-                    command.Parameters.AddWithValue("@accountid", customer.Id);
-                    command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
-                    command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
-                    command.Parameters.AddWithValue("@firstname", customer.FirstName);
-                    command.Parameters.AddWithValue("@lastname", customer.LastName);
-                    command.Parameters.AddWithValue("@shippinginfo", customer.ShippingInfo);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (SqlException e)
-                    {
 
-                    }
-                }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
                     command.Parameters.AddWithValue("@addressid", customer.AddressId);
@@ -118,17 +104,45 @@ namespace Database
 
                     }
                 }
+                using (SqlCommand command = new SqlCommand(querycustomer, connection))
+                {
+                    command.Parameters.AddWithValue("@accountid", customer.Id);
+                    command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
+                    command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
+                    command.Parameters.AddWithValue("@firstname", customer.FirstName);
+                    command.Parameters.AddWithValue("@lastname", customer.LastName);
+                    command.Parameters.AddWithValue("@shippinginfo", customer.ShippingInfo);
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+
+                    }
+                }
+               
                 return customer;
             }
         }
 
-        //Delete a account object
-        public bool DeleteAccount(int id)
+        //Delete a customer object
+        public bool DeleteCustomer(int id)
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "DELETE FROM Account WHERE ID=@id";
-                using (SqlCommand command = new SqlCommand(query, connection))
+                string queryaccount = "DELETE FROM Account WHERE ID=@id";
+                string querycustomer = "DELETE FROM Customer WHERE AccountID=@id";
+
+                using (SqlCommand command = new SqlCommand(queryaccount, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
+                    {
+                        return true;
+                    }
+                }
+                using (SqlCommand command = new SqlCommand(querycustomer, connection))
                 {
                     command.Parameters.AddWithValue("id", id);
                     if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
@@ -140,44 +154,73 @@ namespace Database
             return false;
         }
 
-        //Update a customer object
-        public bool UpdateCustomer(Customer customer)
+        //Delete a administrator object
+        public bool DeleteAdministrator(int id)
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string querycustomer = "UPDATE Customer" +
-                    " SET CreditCardInfo=@creditcardinfo, PhoneNumber=@phonenumber, FirstName=@firstname, LastName=@lastname, ShippingInfo=@shippinginfo" +
-                    " WHERE AccountID=@accountid";
-                string queryaccount = "UPDATE Account" +
-                    " SET Username=@username, Password=@password, Email=@email" +
-                    " WHERE ID=@id";
-                using (SqlCommand command = new SqlCommand(querycustomer, connection))
-                {
-                    command.Parameters.AddWithValue("@accountid", customer.Id);
-                    command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
-                    command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
-                    command.Parameters.AddWithValue("@firstname", customer.FirstName);
-                    command.Parameters.AddWithValue("@lastname", customer.LastName);
-                    command.Parameters.AddWithValue("@shippinginfo", customer.ShippingInfo);
-                    try
-                    {
-                        if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
-                        {
-                            return true;
-                        }
-                    }
-                    catch (SqlException e)
-                    {
+                string queryaccount = "DELETE FROM Account WHERE ID=@id";
+                string querycustomer = "DELETE FROM Administrator WHERE AccountID=@id";
 
-                    }
-
-                }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
-                    command.Parameters.AddWithValue("@id", customer.Id);
-                    command.Parameters.AddWithValue("@username", customer.Username);
-                    command.Parameters.AddWithValue("@password", customer.Password);
-                    command.Parameters.AddWithValue("@email", customer.Email);
+                    command.Parameters.AddWithValue("id", id);
+                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
+                    {
+                        return true;
+                    }
+                }
+                using (SqlCommand command = new SqlCommand(querycustomer, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        
+
+        //Get a account object by id
+        public Account GetAccountById(int id)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "SELECT * FROM Account WHERE ID=@id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            address = CreateAddressFromReader(reader);
+                        }
+                    }
+                }
+            }
+            return account;
+        }
+
+        //Update a account object
+        public bool UpdateAccount(Account account)
+        {
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "UPDATE Account" +
+                    " SET AddressID=@addressid, Username=@username, Email=@email, Password=@password" +
+                    " WHERE ID=@id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", account.Id);
+                    command.Parameters.AddWithValue("@addressid", account.AddressId);
+                    command.Parameters.AddWithValue("@username", account.Username);
+                    command.Parameters.AddWithValue("@email", account.Email);
+                    command.Parameters.AddWithValue("@password", account.Password);
                     try
                     {
                         if (Convert.ToInt32(command.ExecuteNonQuery()) > 0)
