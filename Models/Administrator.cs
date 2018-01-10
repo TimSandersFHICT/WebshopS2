@@ -13,7 +13,7 @@ namespace Models
 
         public string AdminName { get { return adminname; } set { adminname = value; } }
 
-        public Administrator(string adminname, string username, string password, string email) : base(username, password, email)
+        public Administrator(string adminname,int addressid, string username, string password, string email) : base(addressid, username, password, email)
         {
             this.adminname = adminname;
         }

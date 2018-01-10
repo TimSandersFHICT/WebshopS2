@@ -31,7 +31,7 @@ namespace Models
             this.email = email;
         }
 
-        public Account(string username, string password, string email)
+        public Account(int addressid, string username, string password, string email)
         {
             this.username = username;
             this.password = password;

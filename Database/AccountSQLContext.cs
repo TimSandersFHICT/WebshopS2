@@ -249,7 +249,7 @@ namespace Database
 
             if (conState == ConnectionState.Open)
             {
-                string query = "SELECT * FROM ACCOUNT WHERE Username=@username and Password=@password";
+                string query = "SELECT * FROM ACCOUNT LEFT JOIN Customer ON Customer.AccountID = Account.ID WHERE Username=@username and Password=@password ";
                 using (connection)
                 {
                     SqlCommand cmd = new SqlCommand(query, connection);
@@ -262,6 +262,7 @@ namespace Database
                         while (reader.Read())
                         {
                             Account account = CreateAccountFromReader(reader);
+                            
                             return account;
                         }
                     }
@@ -272,17 +273,18 @@ namespace Database
 
         private Account CreateAccountFromReader(SqlDataReader reader)
         {
-            if (reader["CustomerID"] == DBNull.Value)
+            if (account is Administrator)
             {
                 return new Administrator(
                  Convert.ToString(reader["AdminName"]),
+                 Convert.ToInt32(reader["AddressID"]),
                  Convert.ToString(reader["Username"]),
                  Convert.ToString(reader["Password"]),
                  Convert.ToString(reader["Email"]));
 
 
             }
-            else
+            else 
             {
                 return new Customer(
                  Convert.ToString(reader["CreditCardInfo"]),
@@ -290,10 +292,13 @@ namespace Database
                  Convert.ToString(reader["FirstName"]),
                  Convert.ToString(reader["LastName"]),
                  Convert.ToString(reader["ShippingInfo"]),
+                 Convert.ToInt32(reader["AddressID"]),
                  Convert.ToString(reader["Username"]),
                  Convert.ToString(reader["Password"]),
                  Convert.ToString(reader["Email"]));
             }
+         
+         
         }
 
         //Get all accounts
