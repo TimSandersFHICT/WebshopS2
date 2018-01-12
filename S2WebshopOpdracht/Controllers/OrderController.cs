@@ -43,7 +43,7 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add insert logic here
-                Order order = new Order(Convert.ToInt32(collection["AccountID"]), collection["DeliveryName"], collection["BillingName"], false);
+                Order order = new Order(Convert.ToInt32(Session["AccountID"]), collection["DeliveryName"], collection["BillingName"], false);
                 orderLogic.InsertOrder(order);
                 return RedirectToAction("IndexOrder");
             }
