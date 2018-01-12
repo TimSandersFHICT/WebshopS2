@@ -30,16 +30,14 @@ namespace Models
             this.shippinginfo = shippinginfo;
         }
 
-        public Customer(int id, string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo) : base(id)
+  
+
+        public Customer(string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo, int addressid, string username, string password, string email) :this(creditcardinfo, phonenumber, firstname, lastname, shippinginfo, -1, addressid, username, password, email)
         {
-            this.creditcardinfo = creditcardinfo;
-            this.phonenumber = phonenumber;
-            this.firstname = firstname;
-            this.lastname = lastname;
-            this.shippinginfo = shippinginfo;
+
         }
 
-        public Customer(string creditcardinfo, string phonenumber, string firstname, string lastname, string shippinginfo):this(-1, creditcardinfo, phonenumber, firstname, lastname, shippinginfo)
+        public Customer(int id, int addressid, string username, string password, string email) : base(id, addressid, username, password, email)
         {
 
         }

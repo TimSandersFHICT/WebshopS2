@@ -39,6 +39,20 @@ namespace Logic
             }
         }
 
+        //Logic for inserting an customer
+        public Customer InsertCustomer(Customer customer)
+        {
+       
+            if (customer == null)
+            {
+                throw new ArgumentException($"No account found.");
+            }
+            else
+            {
+               return accountrepo.InsertCustomer(customer);
+            }
+        }
+
         //Logic for deleting a customer
         public bool DeleteCustomer(int id)
         {

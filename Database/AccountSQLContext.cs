@@ -19,7 +19,7 @@ namespace Database
             List<Account> accounts = new List<Account>();
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "SELECT * FROM ACCOUNT JOIN Customer ON Customer.AccountID = Account.ID ORDER BY ID";
+                string query = "SELECT * FROM ACCOUNT ORDER BY ID";
 
                 //commit
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -35,6 +35,7 @@ namespace Database
             }
             return accounts;
         }
+
 
         //Insert a administrator object
         public Administrator InsertAdministrator(Administrator administrator)
@@ -63,7 +64,7 @@ namespace Database
                 }
                 using (SqlCommand command = new SqlCommand(queryadmin, connection))
                 {
-                    command.Parameters.AddWithValue("@accountid", administrator.Id);
+                    command.Parameters.AddWithValue("@accountid", administrator.Id = administrator.AddressId);
                     command.Parameters.AddWithValue("@adminname", administrator.AdminName);
                     try
                     {
@@ -90,6 +91,8 @@ namespace Database
                 string queryaccount = "INSERT INTO Account (AddressID, Username, Password, Email)" +
                    "VALUES (@addressid, @username, @password, @email)";
 
+
+
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
                     command.Parameters.AddWithValue("@addressid", customer.AddressId);
@@ -98,16 +101,18 @@ namespace Database
                     command.Parameters.AddWithValue("@email", customer.Email);
                     try
                     {
+
                         command.ExecuteNonQuery();
+
                     }
                     catch (SqlException e)
                     {
 
                     }
-                }
+                }    
                 using (SqlCommand command = new SqlCommand(querycustomer, connection))
                 {
-                    command.Parameters.AddWithValue("@accountid", customer.Id);
+                    command.Parameters.AddWithValue("@accountid", customer.Id = customer.AddressId);
                     command.Parameters.AddWithValue("@creditcardinfo", customer.CreditCardInfo);
                     command.Parameters.AddWithValue("@phonenumber", customer.PhoneNumber);
                     command.Parameters.AddWithValue("@firstname", customer.FirstName);
@@ -134,7 +139,16 @@ namespace Database
             {
                 string queryaccount = "DELETE FROM Account WHERE ID=@id";
                 string querycustomer = "DELETE FROM Customer WHERE AccountID=@id";
+                string queryaddress = "DELETE FROM Address WHERE ID=@id";
 
+                using (SqlCommand command = new SqlCommand(querycustomer, connection))
+                {
+                    command.Parameters.AddWithValue("id", id);
+                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
+                    {
+                        return true;
+                    }
+                }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
                 {
                     command.Parameters.AddWithValue("id", id);
@@ -143,7 +157,7 @@ namespace Database
                         return true;
                     }
                 }
-                using (SqlCommand command = new SqlCommand(querycustomer, connection))
+                using (SqlCommand command = new SqlCommand(queryaddress, connection))
                 {
                     command.Parameters.AddWithValue("id", id);
                     if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
@@ -190,7 +204,7 @@ namespace Database
         {
             using (SqlConnection connection = Database.Connection)
             {
-                string query = "SELECT * FROM Account JOIN Customer ON Customer.AccountID = Account.ID WHERE ID=@id";
+                string query = "SELECT * FROM Account WHERE ID=@id";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -249,7 +263,7 @@ namespace Database
 
             if (conState == ConnectionState.Open)
             {
-                string query = "SELECT * FROM ACCOUNT FULL OUTER JOIN Customer ON Customer.AccountID = Account.ID WHERE Username=@username and Password=@password ";
+                string query = "SELECT * FROM ACCOUNT  WHERE Username=@username and Password=@password ";
                 using (connection)
                 {
                     SqlCommand cmd = new SqlCommand(query, connection);
@@ -285,7 +299,7 @@ namespace Database
 
 
             }
-            else 
+            else if(account is Customer)
             {
                 return new Customer(
                  Convert.ToString(reader["CreditCardInfo"]),
@@ -298,6 +312,15 @@ namespace Database
                  Convert.ToString(reader["Username"]),
                  Convert.ToString(reader["Password"]),
                  Convert.ToString(reader["Email"]));
+            }
+            else
+            {
+                return new Customer(
+                 Convert.ToInt32(reader["ID"]),
+                 Convert.ToInt32(reader["AddressID"]),
+                 Convert.ToString(reader["Username"]),
+                 Convert.ToString(reader["Password"]),
+                 Convert.ToString(reader["Email"])); 
             }
          
          

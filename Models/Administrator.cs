@@ -18,12 +18,9 @@ namespace Models
             this.adminname = adminname;
         }
 
-        public Administrator(int id, string adminname) : base(id)
-        {
-            this.adminname = adminname;
-        }
+    
 
-        public Administrator(string adminname) : this(-1, adminname)
+        public Administrator(string adminname, int addressid, string username, string password, string email) : this(adminname, -1, addressid, username, password, email)
         {
 
         }

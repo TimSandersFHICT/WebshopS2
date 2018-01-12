@@ -44,7 +44,8 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                Customer customer = new Customer(collection["CreditCardInfo"], collection["PhoneNumber"], collection["FirstName"], collection["LastName"], collection["ShippingInfo"], Convert.ToInt32(collection["AccountID"]), Convert.ToInt32(collection["AddressID"]), collection["Username"], collection["Password"], collection["Email"]);
+                accountlogic.InsertCustomer(customer);
                 return RedirectToAction("Index");
             }
             catch
@@ -56,7 +57,12 @@ namespace S2WebshopOpdracht.Controllers
         // GET: Account/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Account account = accountlogic.GetAccountById(id);
+            if (account != null)
+            {
+                return View(account);
+            }
+            else return HttpNotFound();
         }
 
         // POST: Account/Edit/5
@@ -66,7 +72,8 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                Customer customer = new Customer(id, Convert.ToInt32(collection["AddressID"]), collection["Username"], collection["Password"], collection["Email"]);
+                accountlogic.UpdateAccount(customer);
                 return RedirectToAction("Index");
             }
             catch
@@ -78,7 +85,12 @@ namespace S2WebshopOpdracht.Controllers
         // GET: Account/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Account account = accountlogic.GetAccountById(id);
+            if (account != null)
+            {
+                return View(account);
+            }
+            else return HttpNotFound();
         }
 
         // POST: Account/Delete/5
@@ -88,7 +100,7 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                accountlogic.DeleteCustomer(id);
                 return RedirectToAction("Index");
             }
             catch
