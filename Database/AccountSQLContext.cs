@@ -139,7 +139,6 @@ namespace Database
             {
                 string queryaccount = "DELETE FROM Account WHERE ID=@id";
                 string querycustomer = "DELETE FROM Customer WHERE AccountID=@id";
-                string queryaddress = "DELETE FROM Address WHERE ID=@id";
 
                 using (SqlCommand command = new SqlCommand(querycustomer, connection))
                 {
@@ -150,14 +149,6 @@ namespace Database
                     }
                 }
                 using (SqlCommand command = new SqlCommand(queryaccount, connection))
-                {
-                    command.Parameters.AddWithValue("id", id);
-                    if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)
-                    {
-                        return true;
-                    }
-                }
-                using (SqlCommand command = new SqlCommand(queryaddress, connection))
                 {
                     command.Parameters.AddWithValue("id", id);
                     if (Convert.ToInt32(command.ExecuteNonQuery()) == 1)

@@ -101,6 +101,8 @@ namespace S2WebshopOpdracht.Controllers
             {
                 // TODO: Add delete logic here
                 accountlogic.DeleteCustomer(id);
+                accountlogic.DeleteAddress(id);
+                
                 return RedirectToAction("Index");
             }
             catch
