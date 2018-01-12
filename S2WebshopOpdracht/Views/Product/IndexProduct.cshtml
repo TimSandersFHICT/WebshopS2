@@ -47,6 +47,7 @@
             @Html.DisplayFor(modelItem => item.Stock)
         </td>
         <td>
+            @Html.ActionLink("Make Review", "CreateReview", new { id = item.Id }) |
             @Html.ActionLink("Edit", "EditProduct", new { id=item.Id }) |
             @Html.ActionLink("Details", "DetailsProduct", new { id=item.Id }) |
             @Html.ActionLink("Delete", "DeleteProduct", new { id=item.Id })

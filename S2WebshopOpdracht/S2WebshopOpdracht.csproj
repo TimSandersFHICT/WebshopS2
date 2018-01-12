@@ -219,6 +219,10 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Product\CreateReview.cshtml" />
+    <Content Include="Views\Product\DeleteReview.cshtml" />
+    <Content Include="Views\Product\DetailsReview.cshtml" />
+    <Content Include="Views\Product\EditReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

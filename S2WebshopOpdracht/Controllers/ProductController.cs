@@ -145,14 +145,14 @@ namespace S2WebshopOpdracht.Controllers
 
         // POST: Review/Create
         [HttpPost]
-        public ActionResult CreateReview(FormCollection collection)
+        public ActionResult CreateReview(FormCollection collection, int id)
         {
             try
             {
                 // TODO: Add insert logic here
-                Review review = new Review(Convert.ToInt32(collection["AccountID"]), Convert.ToInt32(collection["ProductID"]), collection["Rating"], collection["ReviewText"]);
+                Review review = new Review(Convert.ToInt32(Session["AccountID"]), id, collection["Rating"], collection["ReviewText"]);
                 productLogic.InsertReview(review);
-                return RedirectToAction("IndexReview");
+                return RedirectToAction("IndexProduct");
             }
             catch
             {
