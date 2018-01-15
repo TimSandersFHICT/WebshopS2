@@ -33,9 +33,18 @@ namespace UnitTests
             Assert.AreEqual("Overwatch", productenlijst[0].Name);
         }
 
+        [TestMethod()]
+        public void GetAllReviewsTest()
+        {
+            List<Review> reviewlist = productlogic.GetAllReviews();
+            Review[] reviewlijst = reviewlist.ToArray();
+            Assert.AreEqual("***", reviewlijst[0].Rating);
+        }
+
         private class ProductLogic
         {
             private List<Product> producten;
+            private List<Review> reviews;
 
             public ProductLogic()
             {
@@ -43,6 +52,11 @@ namespace UnitTests
                 {
                     new Product(1, 1, "Overwatch", "Nerf Junkrat", Convert.ToDecimal(49.55), 10)
                 };
+                reviews = new List<Review>()
+                {
+                    new Review(1, 1, 1, "***", "Het is een redelijk product")
+                };
+
             }
 
             public bool DeleteProduct(int id)
@@ -62,7 +76,7 @@ namespace UnitTests
 
             public List<Review> GetAllReviews()
             {
-                throw new NotImplementedException();
+                return reviews;
             }
 
             public Product GetProductById(int id)
