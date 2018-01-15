@@ -145,10 +145,12 @@ namespace UnitTests
 
             public ProductLogic()
             {
+                //Make new product list
                 producten = new List<Product>()
                 {
                     new Product(1, 1, "Overwatch", "Fun multiplayer game", Convert.ToDecimal(49.55), 10)
                 };
+                //Make new review list
                 reviews = new List<Review>()
                 {
                     new Review(1, 1, 1, "***", "Het is een redelijk product")
@@ -161,6 +163,7 @@ namespace UnitTests
             {
                 if (id != 0)
                 {
+                    //Remove product at index id - 1
                     producten.RemoveAt(id - 1);
                     return true;
                 }
@@ -174,6 +177,7 @@ namespace UnitTests
             {
                 if (id != 0)
                 {
+                    //Remove review at index id - 1
                     reviews.RemoveAt(id - 1);
                     return true;
                 }
@@ -185,19 +189,23 @@ namespace UnitTests
 
             public List<Product> GetAllProducts()
             {
+                //Return list of products
                 return producten;
             }
 
             public List<Review> GetAllReviews()
             {
+                //Return list of reviews
                 return reviews;
             }
 
             public Product GetProductById(int id)
             {
+                //List to array
                 Product[] productlist = producten.ToArray();
                 if (id != 0)
                 {
+                    //Return product at index id - 1 because array index starts at 0
                     return productlist[id - 1];
                 }
                 else
@@ -208,9 +216,11 @@ namespace UnitTests
 
             public Review GetReviewById(int id)
             {
+                //List to array
                 Review[] reviewlist = reviews.ToArray();
                 if (id != 0)
                 {
+                    //Return review at index id - 1 because array index starts at 0
                     return reviewlist[id - 1];
                 }
                 else
@@ -221,23 +231,27 @@ namespace UnitTests
 
             public Product InsertProduct(Product product)
             {
+                //Add product to the list
                 producten.Add(product);
                 return product;
             }
 
             public Review InsertReview(Review review)
             {
+                //Add review to the list
                 reviews.Add(review);
                 return review;
             }
 
             public bool UpdateProduct(Product product)
             {
+                //List to array
                 Product[] productlist = producten.ToArray();
 
+                //Check array for same id as inserted product
                 if (Convert.ToBoolean(product.Id = productlist[product.Id - 1].Id))
                 {
-
+                    //Update product in array with same id
                     productlist[product.Id - 1].Name = product.Name;
                     productlist[product.Id - 1].Price = product.Price;
                     productlist[product.Id - 1].Stock = product.Stock;
@@ -251,11 +265,13 @@ namespace UnitTests
 
             public bool UpdateReview(Review review)
             {
+                //List to array
                 Review[] reviewlist = reviews.ToArray();
 
+                //Check array for same id as inserted review
                 if (Convert.ToBoolean(review.Id = reviewlist[review.Id - 1].Id))
                 {
-
+                    //Update review in array with same id
                     reviewlist[review.Id - 1].Rating = review.Rating;
                     reviewlist[review.Id - 1].ReviewText = review.ReviewText;
                     return true;
