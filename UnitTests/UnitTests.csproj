@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProductSQLContextTest.cs" />
     <Compile Include="OrderSQLContextTest.cs" />
+    <Compile Include="AccountSQLContextTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">
