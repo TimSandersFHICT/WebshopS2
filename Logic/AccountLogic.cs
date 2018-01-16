@@ -179,6 +179,9 @@ namespace Logic
             }
         }
 
-     
+        public int GetLastInsertedAddressID()
+        {
+            return accountrepo.GetLastInsertedAddressID();
+        }
     }
 }

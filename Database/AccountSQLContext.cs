@@ -12,6 +12,7 @@ namespace Database
     {
         Address address;
         Account account;
+        private int id;
 
         //Get all accounts
         public List<Account> GetAllAccounts()
@@ -254,7 +255,7 @@ namespace Database
 
             if (conState == ConnectionState.Open)
             {
-                string query = "SELECT * FROM ACCOUNT  WHERE Username=@username and Password=@password ";
+                string query = "SELECT * FROM Account FULL OUTER JOIN Customer ON Customer.AccountID = Account.ID FULL OUTER JOIN Administrator ON Account.ID = Administrator.AccountID WHERE Username=@username and Password=@password ";
                 using (connection)
                 {
                     SqlCommand cmd = new SqlCommand(query, connection);
@@ -436,6 +437,21 @@ namespace Database
                 }
             }
             return address;
+        }
+
+        //Get Last inserted address id
+        public int GetLastInsertedAddressID()
+        {
+            int addressid;
+            using (SqlConnection connection = Database.Connection)
+            {
+                string query = "SELECT TOP 1 ID FROM Address ORDER BY ID DESC";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    addressid = Convert.ToInt32(command.ExecuteScalar());
+                    return addressid;
+                }
+            }
         }
 
         private Address CreateAddressFromReader(SqlDataReader reader)

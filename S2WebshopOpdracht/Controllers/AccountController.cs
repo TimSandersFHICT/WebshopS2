@@ -44,9 +44,33 @@ namespace S2WebshopOpdracht.Controllers
             try
             {
                 // TODO: Add insert logic here
-                Customer customer = new Customer(collection["CreditCardInfo"], collection["PhoneNumber"], collection["FirstName"], collection["LastName"], collection["ShippingInfo"], Convert.ToInt32(collection["AccountID"]), Convert.ToInt32(collection["AddressID"]), collection["Username"], collection["Password"], collection["Email"]);
+                int addressid = accountlogic.GetLastInsertedAddressID();
+                Customer customer = new Customer(collection["CreditCardInfo"], collection["PhoneNumber"], collection["FirstName"], collection["LastName"], collection["ShippingInfo"],  addressid, collection["Username"], collection["Password"], collection["Email"]);
                 accountlogic.InsertCustomer(customer);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Login");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Account/Create
+        public ActionResult CreateAddress()
+        {
+            return View();
+        }
+
+        // POST: Account/Create
+        [HttpPost]
+        public ActionResult CreateAddress(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                Address address = new Address(collection["City"], collection["Street"], collection["Zipcode"], collection["HouseNumber"]);
+                accountlogic.InsertAddress(address);
+                return RedirectToAction("Create");
             }
             catch
             {

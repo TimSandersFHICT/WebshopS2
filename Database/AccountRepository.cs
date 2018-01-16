@@ -75,6 +75,11 @@ namespace Database
             return context.GetAddressById(id);
         }
 
+        public int GetLastInsertedAddressID()
+        {
+            return context.GetLastInsertedAddressID();
+        }
+
         public Account Login(string username, string password)
         {
             return context.Login(username, password);

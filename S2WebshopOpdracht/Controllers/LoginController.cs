@@ -103,6 +103,7 @@ namespace S2WebshopOpdracht.Controllers
                 Session["Username"] = loggedInUser.Username;
                 Session["AccountId"] = loggedInUser.Id;
 
+               
                 //Hier kan je variabelen aanmaken om een loggedinuser naar andere pagina's te sturen
                 return RedirectToAction("Index", "Home");
 

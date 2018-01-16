@@ -22,5 +22,6 @@ namespace Database
         bool DeleteAddress(int id);
         bool UpdateAddress(Address address);
         Address GetAddressById(int id);
+        int GetLastInsertedAddressID();
     }
 }

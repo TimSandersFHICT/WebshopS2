@@ -224,6 +224,7 @@
     <Content Include="Views\Product\DetailsReview.cshtml" />
     <Content Include="Views\Product\EditReview.cshtml" />
     <Content Include="Views\Order\CreateOrderedProduct.cshtml" />
+    <Content Include="Views\Account\CreateAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
