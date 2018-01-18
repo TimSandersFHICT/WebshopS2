@@ -8,7 +8,7 @@ namespace Database
 {
     public class Database
     {
-        private static readonly string connectionString = "Data Source=TIMPC;Initial Catalog=WebshopS2;Integrated Security=True";
+        private static readonly string connectionString = "Data Source=mssql.fhict.local;Initial Catalog=dbi334556;Persist Security Info=True;User ID=dbi334556;Password=banjer297";
 
 
         public static SqlConnection Connection

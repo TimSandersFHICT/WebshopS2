@@ -12,7 +12,7 @@ namespace Database
     {
         Address address;
         Account account;
-        private int id;
+
 
         //Get all accounts
         public List<Account> GetAllAccounts()
